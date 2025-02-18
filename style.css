@@ -1,0 +1,319 @@
+/* 
+   CSS Variables (Custom Properties)
+   These are defined in the :root selector, which represents the <html> element.
+   Variables make it easy to reuse values (like colors) throughout the stylesheet.
+   To use a variable, you write var(--variable-name).
+*/
+:root {
+    --primary-color: #ff5500;       /* Bright orange for buttons and accents */
+    --primary-hover-color: #e3450c; /* Darker orange for hover states */
+    --success-color: #28a745;       /* Green for completed tasks (e.g., checked checkboxes) */
+    --danger-color: #dc3545;        /* Red for delete button */
+    --danger-hover-color: #c82333;  /* Darker red for delete button hover */
+    --background-color: #2a2929;    /* Black background for the entire page */
+    --container-bg: #1a1a1a;        /* Dark gray background for the container */
+    --text-color: #ddd;             /* Light gray text color for contrast */
+    --border-color: #444;           /* Dark gray border color for inputs */
+    --shadow-color: rgba(255, 255, 255, 0.1); /* Light shadow for glowing effects */
+}
+
+/*
+   General Reset
+   This removes default margins and padding from all elements and ensures
+   that the box-sizing property is set to border-box, which makes it easier
+   to size elements consistently.
+*/
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+/*
+   Body Styling
+   The body is the main container for the entire page. Here, we set:
+   - A default font family.
+   - A black background color using the --background-color variable.
+   - Light gray text color using the --text-color variable.
+   - Flexbox to center the to-do list container both horizontally and vertically.
+   - Minimum height of 100vh to ensure the page takes up the full viewport height.
+   - Padding to add some space around the edges.
+*/
+body {
+    font-family: 'Arial', sans-serif;
+    background: var(--background-color);
+    color: var(--text-color);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    padding: 20px;
+}
+
+/*
+   Heading (h1) Styling
+   This styles the main heading of the to-do list:
+   - Centers the text.
+   - Sets the font size to 2.5rem (40px).
+   - Uses the --primary-color variable for the color.
+   - Adds a glowing shadow effect using the --primary-color variable.
+   - Adds margin at the bottom to create space between the heading and the form.
+*/
+h1 {
+    text-align: center;
+    font-size: 2.5rem;
+    color: var(--primary-color);
+    text-shadow: 0 0 4px yellow; /* Glowing shadow effect */
+    margin-bottom: 20px;
+    margin-right: 15px;
+}
+
+/*
+   Container Styling
+   The container holds the entire to-do list, including the form and the list of tasks.
+   - Background color is set using the --container-bg variable.
+   - Padding adds space inside the container.
+   - Border-radius rounds the corners of the container.
+   - Box-shadow adds a glowing shadow effect using the --primary-color variable.
+   - Border adds a subtle outline using the --primary-color variable.
+   - Width is set to 100% of its parent, but max-width ensures it doesn't get too wide on larger screens.
+*/
+.container {
+    background:#333;
+    padding: 20px;
+    border-radius: 10px;
+    border: 1px solid var(--primary-color);
+    box-shadow: 0 0 10px yellowgreen; /* Glowing shadow effect */
+    width: 100%;
+    max-width: 400px;
+}
+
+/*
+   Form Styling
+   The form contains the input field and the "ADD" button.
+   - Flexbox is used to align the input and button horizontally.
+   - Gap adds space between the input and button.
+   - Margin at the bottom creates space between the form and the task list.
+*/
+form {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 20px;
+    position: relative; /* Required for positioning the "ADD" button */
+}
+
+/*
+   Input Field Styling
+   This styles the input field where users type their tasks.
+   - flex: 1 makes the input field take up all available space.
+   - Padding adds space inside the input field.
+   - Border is set using the --primary-color variable.
+   - Border-radius rounds the corners of the input field.
+   - Font size is set to 1rem (16px).
+   - outline: none removes the default focus outline (we add a custom focus style below).
+   - transition: border-color 0.3s ease adds a smooth transition when the border color changes.
+*/
+#input {
+    flex: 1;
+    padding: 10px;
+    border: 1px solid var(--primary-color);
+    border-radius: 1000px; /* Fully rounded corners */
+    font-size: 1rem;
+    outline: none;
+    background:#1a1a1a ; /* Dark gray background for the input */
+    color: var(--text-color); /* Light gray text color */
+    transition: border-color 0.3s ease;
+}
+
+/*
+   Input Field Focus State
+   When the input field is focused (clicked or tabbed into), the border color changes
+   to a brighter version of the --primary-color variable.
+*/
+#input:focus {
+    border-color: #ff8533; /* Brighter orange for focus */
+}
+
+/*
+   Add Button Styling
+   This styles the "ADD" button.
+   - Positioned absolutely inside the form for a floating effect.
+   - Padding adds space inside the button.
+   - Background color is set using the --primary-color variable.
+   - Text color is white.
+   - Border is removed.
+   - Border-radius rounds the corners of the button.
+   - Font size is set to 1rem (16px).
+   - Cursor is set to pointer to indicate it's clickable.
+   - transition: background 0.3s ease adds a smooth transition when the background color changes.
+*/
+#add {
+    position: absolute;
+    top: 0;
+    right: 0;
+    padding: 11px 20px;
+    background: var(--primary-color);
+    color: #fff;
+    border: none;
+    border-radius: 1000px; /* Fully rounded corners */
+    font-size: 1rem;
+    cursor: pointer;
+    transition: background 0.3s ease;
+}
+
+/*
+   Add Button Hover State
+   When the user hovers over the "ADD" button, the background color changes
+   to the --primary-hover-color variable.
+*/
+#add:hover {
+    background: var(--primary-hover-color);
+}
+
+/*
+   Task List Styling
+   This styles the unordered list that holds the tasks.
+   - list-style: none removes the default bullet points.
+*/
+ul#items {
+    list-style: none;
+}
+
+/*
+   Task Item Styling
+   Each task item is a list item (<li>) with a checkbox, task text, and delete button.
+   - Flexbox is used to align the checkbox, text, and delete button horizontally.
+   - Background color is set using the --container-bg variable.
+   - Padding adds space inside the task item.
+   - Border-radius rounds the corners of the task item.
+   - Margin at the bottom creates space between tasks.
+   - Box-shadow adds a subtle shadow to make the task item stand out.
+   - transition: transform 0.3s ease, box-shadow 0.3s ease adds smooth transitions for hover effects.
+*/
+.todo {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background: var(--container-bg);
+    padding: 10px;
+    border-radius: 5px;
+    margin-bottom: 10px;
+    box-shadow: 0 2px 4px yellow;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+/*
+   Task Item Hover State
+   When the user hovers over a task item, it moves up slightly (transform: translateY)
+   and the shadow becomes more pronounced.
+*/
+.todo:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px greenyellow;
+}
+
+/*
+   Task Text Styling
+   This styles the label that displays the task text.
+   - flex: 1 makes the text take up all available space.
+   - Margin on the left creates space between the checkbox and the text.
+   - Font size is set to 1.1rem (17.6px).
+   - Text color is set using the --text-color variable.
+*/
+.todo-text {
+    flex: 1;
+    margin-left: 10px;
+    font-size: 1.1rem;
+    color: var(--text-color);
+}
+
+/*
+   Custom Checkbox Styling
+   This replaces the default checkbox with a custom SVG icon.
+   - Flexbox is used to align the icon vertically.
+   - Cursor is set to pointer to indicate it's clickable.
+*/
+.custom-checkbox {
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+}
+
+/*
+   Checkbox Icon Styling
+   This styles the SVG icon used for the custom checkbox.
+   - Width and height are set to 24px.
+   - Fill color is set using the --primary-color variable.
+   - transition: fill 0.3s ease adds a smooth transition when the fill color changes.
+*/
+.custom-checkbox svg {
+    width: 24px;
+    height: 24px;
+    fill: var(--primary-color);
+    transition: fill 0.3s ease;
+}
+
+/*
+   Hide Default Checkbox
+   The default checkbox is hidden because we're using a custom SVG icon.
+*/
+input[type="checkbox"] {
+    display: none;
+}
+
+/*
+   Checked Checkbox State
+   When the checkbox is checked, the SVG icon's fill color changes
+   to the --success-color variable.
+*/
+input[type="checkbox"]:checked + .custom-checkbox svg {
+    fill: var(--success-color);
+}
+
+/*
+   Delete Button Styling
+   This styles the delete button for each task.
+   - Background is removed.
+   - Border is removed.
+   - Cursor is set to pointer to indicate it's clickable.
+   - Padding adds space inside the button.
+   - transition: transform 0.3s ease adds a smooth transition for hover effects.
+*/
+.delete-button {
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 5px;
+    transition: transform 0.3s ease;
+}
+
+/*
+   Delete Button Hover State
+   When the user hovers over the delete button, it scales up slightly.
+*/
+.delete-button:hover {
+    transform: scale(1.2);
+}
+
+/*
+   Delete Button Icon Styling
+   This styles the SVG icon used for the delete button.
+   - Width and height are set to 24px.
+   - Fill color is set using the --danger-color variable.
+   - transition: fill 0.3s ease adds a smooth transition when the fill color changes.
+*/
+.delete-button svg {
+    width: 24px;
+    height: 24px;
+    fill: var(--danger-color);
+    transition: fill 0.3s ease;
+}
+
+/*
+   Delete Button Icon Hover State
+   When the user hovers over the delete button, the icon's fill color changes
+   to the --danger-hover-color variable.
+*/
+.delete-button:hover svg {
+    fill: var(--danger-hover-color);
+}
